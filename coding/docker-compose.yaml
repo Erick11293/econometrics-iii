@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  opt:
+    container_name: econometrics-ii
+    build: .
+#    command:
+#      - /bin/sh
+#      - -c
+#      - |
+#        su
+#        cd /home/compras
+#        start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
+    volumes:
+      - type: bind
+        source: ./data # ruta en host
+        target: /home/compras/data
+      - type: bind
+        source: ./notebooks # ruta en host
+        target: /home/compras/notebooks
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "10g"
+        reservations:
+          cpus: "2.0"
+          memory: "4g"
+    environment:
+      - JUPYTER_TOKEN=
+    ports:
+      - 8888:8888
+
